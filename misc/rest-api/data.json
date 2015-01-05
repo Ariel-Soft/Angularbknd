@@ -1,0 +1,571 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Backand REST API Playground",
+        "description": "",
+        "version": "1.5.0"
+    },
+    "host": "api.backand.com:8080",
+    "schemes": [
+        "https"
+    ],
+    "basePath": "/1",
+    "produces": [
+        "application/json"
+    ],
+    "tags": [
+        {
+            "name": "Database Table Data"
+        },
+        {
+            "name": "Database Table Configuration"
+        },
+        {
+            "name": "App Configuration"
+        },
+        {
+            "name": "Dashboard Configuration"
+        }
+    ],
+    "paths": {
+        "/table/data/{name}": {
+            "get": {
+                "summary": "Get list of records",
+                "description": "Return list of records from a table or view based on paging, filter or sort parameters.",
+                "tags": [
+                    "Database Table Data"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "The table or view name",
+                        "required": true,
+                        "type": "array",
+                        "format": "string",
+                        "enum": [
+                            "blank"
+                        ]
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "How many records per page",
+                        "required": false,
+                        "type": "number",
+                        "default": 20
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "Which page to display",
+                        "required": false,
+                        "type": "number",
+                        "default": 1
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "A filter array were each item has the properties fieldName, operator and value.<br>The operator options depend on the field type.<br><a class=\"operators-link\">More for the opertors options</a><br><div class=operators><ul>numeric or date fields<li>equals</li><li>notEquals</li><li>greaterThan</li><li>greaterThanOrEqualsTo</li><li>lessThan</li><li>lessThanOrEqualsTo</li><li>empty</li><li>notEmpty</li></ul><ul>textual fields<li>equals</li><li>notEquals</li><li>startsWith</li><li>contains</li><li>notContains</li><li>empty</li><li>notEmpty</li></ul><ul>related fields<li>in</li></ul></div>",
+                        "required": false,
+                        "type": "array",
+                        "schema": {
+                            "$ref": "Filter"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "A sort array were each item has the properties fieldName and order.<br>The order options are \"asc\" or \"desc\".",
+                        "required": false,
+                        "type": "array",
+                        "schema": {
+                            "$ref": "Sort"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Free text search",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "deep",
+                        "in": "query",
+                        "description": "When set to true, brings the related parent rows in the relatedTables property",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    {
+                        "name": "withSelectOptions",
+                        "in": "query",
+                        "description": "Get a text value collection to load select options",
+                        "required": false,
+                        "type": "boolean",
+                        "default": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of records"
+                    }
+                }
+            }
+        },
+        "/table/data/{name}/{id}": {
+            "get": {
+                "summary": "Get single record",
+                "description": "Return single record data includes information on drop downs.",
+                "tags": [
+                    "Database Table Data"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "The table or view name",
+                        "required": true,
+                        "type": "array",
+                        "format": "string",
+                        "enum": [
+                            "blank"
+                        ]
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "deep",
+                        "in": "query",
+                        "description": "When set to true, brings the related parent and child rows into the json structure",
+                        "type": "boolean",
+                        "default": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return __metadata with the record primary key and all the fields data that the user can Table",
+                        "schema": {
+                            "$ref": "TablePost"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update a record",
+                "description": "Update a single record. In order to update JUST copy the Json of the GET as is and update the fields values OR includes the fields that need to be updated.",
+                "tags": [
+                    "Database Table Data"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "The table or view name",
+                        "required": true,
+                        "type": "array",
+                        "format": "string",
+                        "enum": [
+                            "blank"
+                        ]
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "returnObject",
+                        "in": "query",
+                        "description": "Set this to true when you have server side business rules that causes additional changes to the object. In that case this request will return the updated object",
+                        "required": false,
+                        "type": "boolean",
+                        "default": false
+                    },
+                    {
+                        "name": "object",
+                        "in": "body",
+                        "description": "The object that you want to update",
+                        "required": false,
+                        "schema": {
+                            "$ref": "Fields"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "By default, returns no data, unless returnObject is set to true, then it returns the updated object"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create new record",
+                "description": "Create a new record. In order to create new record you must include the required fields and any other field to be included in the new record. You can JUST copy the Json of the GET and update the values.",
+                "tags": [
+                    "Database Table Data"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "The table or view name",
+                        "required": true,
+                        "type": "array",
+                        "format": "string",
+                        "enum": [
+                            "blank"
+                        ]
+                    },
+                    {
+                        "name": "returnObject",
+                        "in": "query",
+                        "description": "Set this to true when you have server side business rules that causes additional changes to the object. In that case this request will return the created object",
+                        "required": false,
+                        "type": "boolean",
+                        "default": false
+                    },
+                    {
+                        "name": "object",
+                        "in": "body",
+                        "description": "The object that you want to create",
+                        "required": false,
+                        "schema": {
+                            "$ref": "Fields"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "By default, returns the new record primary key (id), unless returnObject is set to true, then it returns the created object"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a record",
+                "description": "Delete a record. Must provide the PK of the record",
+                "tags": [
+                    "Database Table Data"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "The table or view name",
+                        "required": true,
+                        "type": "array",
+                        "format": "string",
+                        "enum": [
+                            "blank"
+                        ]
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record pk",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns the deleted record primary key (id)"
+                    }
+                }
+            }
+        },
+        "/table/config/{name}": {
+            "get": {
+                "summary": "Table configuration",
+                "description": "Return the table configuration based on the settings in the console",
+                "tags": [
+                    "Table Configuration"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "The table or view name.",
+                        "default": "Customers",
+                        "required": true,
+                        "type": "array",
+                        "format": "string",
+                        "enum": [
+                            "blank"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of products",
+                        "schema": {
+                            "$ref": "table"
+                        }
+                    }
+                }
+            }
+        },
+        "/app/config": {
+            "get": {
+                "summary": "App main UI configuration and metadata",
+                "description": "The app config information includes menu as pages...\n",
+                "tags": [
+                    "App Configuration"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of products",
+                        "schema": {
+                            "$ref": "Config"
+                        }
+                    }
+                }
+            }
+        },
+        "/dashboard/data/{id}": {
+            "get": {
+                "summary": "Dashboard data",
+                "description": "Return the dashboard data based on the settings in the console.",
+                "tags": [
+                    "Dashboard Data"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The dashboard id.",
+                        "required": true,
+                        "type": "array",
+                        "format": "string",
+                        "enum": [
+                            "blank"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of products",
+                        "schema": {
+                            "$ref": "Dashboard"
+                        }
+                    }
+                }
+            }
+        },
+        "/dashboard/config/{id}": {
+            "get": {
+                "summary": "Dashboard configuration",
+                "description": "Return the dashboard configuration based on the settings in the console.",
+                "tags": [
+                    "Dashboard Configuration"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The dashboard id.",
+                        "required": true,
+                        "type": "array",
+                        "format": "string",
+                        "enum": [
+                            "blank"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of products",
+                        "schema": {
+                            "$ref": "Dashboard"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Page": {
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Page caption"
+                },
+                "partType": {
+                    "type": "string",
+                    "description": "Page object type: table or dashboard"
+                },
+                "partId": {
+                    "type": "number",
+                    "description": "Object identification"
+                }
+            }
+        },
+        "Workspace": {
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Caption"
+                },
+                "homepage": {
+                    "type": "number",
+                    "description": "The page id of the first page to display"
+                },
+                "pages": {
+                    "type": "array",
+                    "$ref": "Page"
+                }
+            }
+        },
+        "User": {
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "fullName": {
+                    "type": "number"
+                },
+                "role": {
+                    "type": "number",
+                    "description": "Backand Role"
+                }
+            }
+        },
+        "Config": {
+            "properties": {
+                "userPreviewUrl": {
+                    "type": "string",
+                    "description": "The hosting URL"
+                },
+                "title": {
+                    "type": "string",
+                    "description": "the app's title"
+                },
+                "workspace": {
+                    "type": "array",
+                    "$ref": "Workspace"
+                },
+                "user": {
+                    "$ref": "User"
+                }
+            }
+        },
+        "Table": {
+            "properties": {
+                "totalRows": {
+                    "type": "number"
+                }
+            }
+        },
+        "Dashboard": {
+            "properties": {
+                "totalRows": {
+                    "type": "number"
+                }
+            }
+        },
+        "Sort": {
+            "properties": {
+                "fieldName": {
+                    "type": "string",
+                    "optional": false
+                },
+                "order": {
+                    "optional": false,
+                    "type": "string",
+                    "description": "asc or desc"
+                }
+            }
+        },
+        "Filter": {
+            "properties": {
+                "fieldName": {
+                    "type": "string"
+                },
+                "operator": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "TableAutocomplete": {
+            "properties": {
+                "TableName": {
+                    "type": "object"
+                }
+            }
+        },
+        "TableDates": {
+            "properties": {
+                "fieldName": {
+                    "type": "string",
+                    "descripttion": "Date in javascript syntax"
+                }
+            }
+        },
+        "__metadata": {
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "desription": "The primary key fo the record"
+                },
+                "autocomplete": {
+                    "type": "array",
+                    "$ref": "TableAutocomplete"
+                },
+                "dates": {
+                    "type": "array",
+                    "$ref": "TableDates"
+                }
+            }
+        },
+        "_metadata": {
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "desription": "The primary key fo the record"
+                }
+            }
+        },
+        "Fields": {
+            "empty": null
+        },
+        "TablePost": {
+            "properties": {
+                "__metadata": {
+                    "$ref": "__metadata"
+                },
+                "fields": {
+                    "type": "object"
+                }
+            }
+        },
+        "Error": {
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
