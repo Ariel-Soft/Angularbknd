@@ -8,6 +8,7 @@ backAndControllers.controller('page1Controller', ['$scope',
     function ($scope) {
 
 
+
         /*  an example of how to add your own column  */
         $scope.$on('gridConfigCompleted', function (event, config) {
             

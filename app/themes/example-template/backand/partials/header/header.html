@@ -13,7 +13,7 @@
                             </a>
                         </li>
 
-                        <li class="dropdown hidden-xs">
+                        <!--<li class="dropdown hidden-xs">
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i></a>
                             <div class="dropdown-menu with-arrow panel panel-default admin-options" ui-not-close-on-click="">
                                 <div class="panel-heading"> Admin Options </div>
@@ -129,6 +129,7 @@
                                             <label class="skin-check">
                                                 <input type="radio" name="skin" value="23" ng-model="admin.skin" class="ng-pristine ng-valid">
                                                 <span class="skin-item bg-body">
+
                                                     <span class="overlay"><span class="glyphicon glyphicon-ok"></span></span>
                                                     <span class="bg-success item-header"></span>
                                                     <span class="bg-success item-header"></span>
@@ -327,26 +328,28 @@
                                     <a href="#/mail/inbox">Show all notifications.</a>
                                 </div>
                             </div>
-                        </li>
+                        </li>-->
 
                     </ul>
 
-
-                  
-               
-                   
                     <ul class="nav-right pull-right list-unstyled">
 
                         <li class="dropdown text-normal nav-profile">
-                            <a href="#" class="dropdown-toggle account" data-toggle="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="glyphicon glyphicon-user"></i>
+                                <span>
+                                    {{profile.username}}<i class="fa fa-caret-down"></i>
+                                </span>
+                            </a>
+                            <!--<a href="#" class="dropdown-toggle account" data-toggle="dropdown">
                                 <div class="avatar">
                                     <img src="{{profile.img}}" class="img-circle img30_30" alt="" />
                                     <span class="hidden-xs">
-                                        <span>{{profile.fullName}}</span>
+                                        <span>Hello, {{profile.fullName}}</span>
                                     </span>
                                 </div>
                                   
-                            </a>
+                            </a>-->
                             <ul class="dropdown-menu with-arrow pull-right">
                                 <li>
                                     <a href="#/pages/profile">
@@ -373,7 +376,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        <li class="dropdown langs text-normal ng-scope">
+                        <!--<li class="dropdown langs text-normal ng-scope">
                             <a href="javascript:;" class="dropdown-toggle active-flag" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="flag flags-american"></div>
                             </a>
@@ -409,7 +412,7 @@
                                     <a href="javascript:;" data-ng-click="setLang('한국어')"><div class="flag flags-korea"></div> 한국어</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li>-->
                     </ul>
                     <!--</div>-->
                 </div>

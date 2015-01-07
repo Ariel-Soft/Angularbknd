@@ -28,6 +28,8 @@ function LoadCalendarScript(callback) {
         LoadFullCalendarScript();
     }
 }
+
+
 //
 // Dynamically load  OpenStreetMap Plugin
 // homepage: http://openlayers.org
@@ -2330,6 +2332,7 @@ var exampleInit = (function () {
         }
         else {
             if (li.find('a.dropdown-toggle').hasClass('active-parent')) {
+                $('a.dropdown-toggle').css('background', '#17232c');
                 var pre = $(this).closest('ul.dropdown-menu');
                 pre.find("li.dropdown").not($(this).closest('li')).find('ul.dropdown-menu').slideUp('fast');
             }
@@ -2354,6 +2357,8 @@ var exampleInit = (function () {
             e.preventDefault();
         }
     });
+
+
     var height = window.innerHeight - 49;
     $('#main').css('min-height', height)
 		.on('click', '.expand-link', function (e) {
@@ -2435,6 +2440,12 @@ var exampleInit = (function () {
     });
 });
 
+
+$(document).ready(function () {
+    $('.dropdown-toggle .active-parent .active').css('border', 'none');
+    $('.dropdown-menu').css('border-color', '#17232c');
+
+});
 function alignBanner() {
     if ($('#backand-banner').length == 1) {
         $('header.navbar.ng-scope').css('top', '30px');
