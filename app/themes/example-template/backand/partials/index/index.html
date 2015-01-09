@@ -1,0 +1,31 @@
+﻿<!--Start Main Theme Body-->
+<!--Start Header-->
+<header ng-include="'themes/example-template/backand/partials/header/header.html'" id="header" class="header-container ng-scope header-fixed bg-white" data-ng-class="{ 'header-fixed': admin.fixedHeader,
+                                  'bg-white': ['11','12','13','14','15','16','21'].indexOf(admin.skin) >= 0,
+                                  'bg-dark': admin.skin === '31',
+                                  'bg-primary': ['22','32'].indexOf(admin.skin) >= 0,
+                                  'bg-success': ['23','33'].indexOf(admin.skin) >= 0,
+                                  'bg-info-alt': ['24','34'].indexOf(admin.skin) >= 0,
+                                  'bg-warning': ['25','35'].indexOf(admin.skin) >= 0,
+                                  'bg-danger': ['26','36'].indexOf(admin.skin) >= 0
+                 }">
+</header>
+<!--End Header-->
+<!--Start Container-->
+<div id="main" class="main-container">
+    <div class="row">
+        <div id="sidebar-left" class="col-xs-2 col-sm-2" style="padding: 0px;width: 16.8%;" ng-include="'themes/example-template/backand/partials/sidebar/sidebar.html'">
+        </div>
+        <!--Start Content-->
+        <div id="content" class="col-xs-12 col-sm-10" style="width:82.9%;max-height:610px;overflow:scroll;background: rgba(68, 43, 43, 0.07);">
+            <!--<div class="preloader">
+                <img src="themes/devoops-master/img/devoops_getdata.gif" class="devoops-getdata" alt="preloader" />
+            </div>-->
+            <div id="ajax-content" class="bknd-container" ng-view></div>
+            <!--<aside class="right-side" ng-view></aside>
+            <aside class="right-side" ng-include="templateUrl()"></aside>-->
+        </div>
+        <!--End Content-->
+    </div>
+</div>
+<!--End Main Theme Body-->

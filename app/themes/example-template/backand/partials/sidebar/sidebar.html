@@ -1,0 +1,13 @@
+<section class="sidebar">
+    <div ng-include="'themes/example-template/backand/partials/profile/profile.html'"></div>
+    
+    <div style="height:610px;" ng-include="'themes/example-template/backand/partials/menu/menu.html'" id="nav-container" class="nav-container ng-scope nav-fixed nav-vertical bg-dark" data-ng-class="{ 'nav-fixed': admin.fixedSidebar,
+                                    'nav-horizontal': admin.menu === 'horizontal',
+                                    'nav-vertical': admin.menu === 'vertical',
+                                    'bg-white': ['31','32','33','34','35','36'].indexOf(admin.skin) >= 0,
+                                    'bg-dark': ['31','32','33','34','35','36'].indexOf(admin.skin) < 0
+                   }">
+
+    </div>
+
+</section>
