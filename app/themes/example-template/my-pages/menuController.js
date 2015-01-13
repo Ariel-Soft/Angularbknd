@@ -10,6 +10,7 @@ angular.module('backAnd.controllers')
 
 
 
+
         /* Uncomment to see an example of how to add your own menu item  */
         //$scope.$on('appConfigCompleted', function (event, data) {
         //    /*  this example adds a menu item to page1 */

@@ -5,6 +5,7 @@
 /*-------------------------------------------
 	Dynamically load plugin scripts
 ---------------------------------------------*/
+//
 // Dynamically load Fullcalendar Plugin Script
 // homepage: http://arshaw.com/fullcalendar
 // require moment.js
@@ -2438,6 +2439,7 @@ var exampleInit = (function () {
         OpenModalBox(header, form, button);
     });
 });
+
 
 
 $(document).ready(function () {

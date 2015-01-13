@@ -29,20 +29,11 @@ angular.module('backAnd.directives')
         },
     	templateUrl: 'backand/js/directives/multiSelect/partials/multiSelect.html',
     	controller: ['$scope', '$http', '$sce', '$q', '$timeout', '$log', function ($scope, $http, $sce, $q, $timeout, $log) {
-
-
     	   
             $scope.dirty = {};
-            var states = _.map($scope.field.options, function(o) {
-                return { label: o.name, value: o.value };
-            });
-            var mapValuesLabels = _.object(_.pluck(states, "value"), _.pluck(states, "label"));
-            var mapLabelsValues = _.object(_.pluck(states, "label"), _.pluck(states, "value"));
-            var a = $scope.value.val.split(",");
-            $scope.tags = _.map(a, function(v) {
-                return mapValuesLabels[v];
-            });
- 
+            $scope.tags = $scope.field.selected;
+            var states = [{ label: 'Alabama', value: 1 }, { label:'Alaska', value: 2 }, { label:'California', value: 3 }, { label:'new York', value: 4 }];
+
             $scope.dropdownStructure = null;
             $scope.dropdownValue = null;
             if ($scope.field.small){
@@ -67,7 +58,7 @@ angular.module('backAnd.directives')
 
 
             $scope.$watchCollection("dropdownValue", function(newValue, oldValue) {
-                if (newValue && newValue.val){
+                if (newValue.val){
                     add_tag(newValue.val);
                     $scope.dropdownValue = {
                         val: null
@@ -101,34 +92,23 @@ angular.module('backAnd.directives')
 
             function suggest_state_backand(term) {
                 $log.debug("suggest_state_backand");
-                var deferred = $q.defer();
-                $http.get(backandGlobal.url + "/1/view/data/autocomplete/" + $scope.field.viewName + '/' + $scope.field.name, 
-                    { 
-                        params: { term: term, limit: 20 }
-                    }
-                )
-                .success(
-                    function(data) { 
-                        console.log("success", data); 
-                        deferred.resolve(data);
-                })
-                .error(function(error) { 
-                        console.log("error", error);
-                        deferred.resolve([]);
-                });
-                return deferred.promise;
+                var deferred = $http.get("http://api.backand.com:8099" + "/1/view/data/autocomplete/" + 'Customers' + '/' + 'Job_Title', 
+                    { params: { term: term, limit: 20 } });
+                return deferred;
             }
 
             function add_tag(selected) {
               $log.debug(selected);
-              $scope.tags = _.uniq($scope.tags.concat(selected.label));         
+              $scope.tags = _.uniq($scope.tags.concat(selected))           
               // Clear model
               $scope.dirty.value = undefined;
             };
 
             $scope.clickDelete = function(v) {
                 $log.debug(v);
-                $scope.tags = _.without($scope.tags, v);
+                $scope.tags = _.reject($scope.tags, function(t) {
+                    return t.value == v;
+                });
             };
 
             $scope.debounce_options = {
@@ -140,17 +120,14 @@ angular.module('backAnd.directives')
 
             $scope.autocomplete_options = {
                 // suggest: suggest_state,
-                // suggest: suggest_state_remote,
-                suggest: suggest_state_backand,
+                suggest: suggest_state_remote,
+                // suggest: suggest_state_backand,
                 on_select: add_tag
             };
 
             $scope.$watchCollection("tags", function(newValue, oldValue) {
-                $log.debug("new tags", newValue);        
-                var a =_.map($scope.tags, function(v) {
-                    return mapLabelsValues[v];
-                });
-                 $scope.value.val = a.join(",");
+                $log.debug("new tags", newValue);
+                $scope.field.selected = $scope.tags;
             });
 
 

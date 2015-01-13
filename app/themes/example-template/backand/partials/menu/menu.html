@@ -3,8 +3,8 @@
         <div class="row">
             <div class="input-group">
                 <div class="btn-group" dropdown is-open="status.isopen" style="margin-top:15px;">
-                    <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled" ng-style="{'width':'220px', 'text-align':'left', 'margin-left':'30px', 'background': '#1c2b36','border-color':'rgba(255,255,255,.05)','height':'50px'}">
-                        {{currentWorkspace.name}} <span class="caret"></span>
+                    <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled" ng-style="{'width':'220px', 'text-align':'left', 'margin-left':'26px', 'background': '#1c2b36','border-color':'rgba(255,255,255,.05)','height':'50px'}">
+                   {{currentWorkspace.name}} <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" style="width: 93%;margin-left:18px;" role="menu">
                         <li ng-repeat="workspace in additionalWorkspaces" ng-click="changeWorkspace(workspace.id)"><a href="">{{workspace.name}}</a></li>
@@ -17,9 +17,10 @@
                 <a href="" class="dropdown-toggle">
                     <i class="fa custom-icon" icon-type="p.partType"></i>
                     <span>{{p.name}}</span>
-                    <i class="fa fa-angle-double-right" style="margin-left:40%;" ng-show="p.pages"></i>
+                    <i class="fa fa-angle-double-right" style="margin-left:35%;" ng-show="p.pages"></i>
 
                 </a>
+
                 <ul class="dropdown-menu" ng-show="p.pages" style="width:96%;border: none;">
                     <li style="background: none;" ng-repeat="page in p.pages" data-ng-if="page.partType == 'table' || page.partType == 'dashboard'|| page.partType == 'content'" ng-click="setCurrentMenuSelection({partId:page.partId, name:page.name ,index:$index ,partType:page.partType}, {partId:p.partId, name:p.name ,index :$index ,partType:p.partType}); $event.stopPropagation()">
                         <a href="" class="ajax-link" style="background:none;">
