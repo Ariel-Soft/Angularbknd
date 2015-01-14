@@ -7,7 +7,7 @@
 
 angular.module('backAnd.controllers')
     .controller('signInController', ['$scope', 'Global', '$http', '$location', '$rootScope','$route', 'AuthService',
-        function ($scope, Global, $http, $location, $rootScope, $route, AuthService) {
+        function ($scope, Global, $http, $location, $rootScope, $route, AuthService,window) {
             $scope.global = Global;
 
             function toQueryString(obj) {
@@ -97,11 +97,14 @@ angular.module('backAnd.controllers')
             //}
 
             $scope.authentication = function () {
+                debugger;
                 $scope.loginError = '';
                 $scope.waiting = true;
-
+               
                 AuthService.signIn($scope.user, $scope.password, $scope.appName,
                 function (data, status, headers, config) {
+                    debugger;
+                   
                     localStorage.setItem('Authorization', $http.defaults.headers.common['Authorization']);
                     $http.defaults.headers.common['Authorization'] = localStorage.getItem('Authorization');
                     backand.security.authentication.token = $http.defaults.headers.common['Authorization'];
@@ -109,10 +112,9 @@ angular.module('backAnd.controllers')
                     $location.path('/');
 
                     $rootScope.$broadcast('signedIn', data);
-
-                    //window.location.reload()
                 },
                 function (data, status, headers, config) {
+                    debugger;
                     var error_description = "The server is busy. Please contact your administrator or try again later.";
                     if (data && data.error_description)
                         error_description = data.error_description;
@@ -122,6 +124,7 @@ angular.module('backAnd.controllers')
                     $scope.loginError = error_description;
                     //console.log(status)
                     $scope.waiting = false;
+                   
                 })
             }
 

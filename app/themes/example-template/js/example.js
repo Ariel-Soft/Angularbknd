@@ -35,11 +35,13 @@ function LoadCalendarScript(callback) {
 // homepage: http://openlayers.org
 //
 function LoadOpenLayersScript(callback) {
+
     if (!$.fn.OpenLayers) {
         $.getScript('http://www.openlayers.org/api/OpenLayers.js', callback);
     }
     else {
         if (callback && typeof (callback) === "function") {
+           
             callback();
         }
     }
@@ -2440,12 +2442,10 @@ var exampleInit = (function () {
     });
 });
 
-
-
 $(document).ready(function () {
     $('.dropdown-toggle .active-parent .active').css('border', 'none');
     $('.dropdown-menu').css('border-color', '#17232c');
-
+   
 });
 function alignBanner() {
     if ($('#backand-banner').length == 1) {

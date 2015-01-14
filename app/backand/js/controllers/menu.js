@@ -19,6 +19,7 @@ angular.module('backAnd.controllers')
              * @param {object} workspaceId, required, each workspace have a different menu
              */
             $scope.loadMenu = function (workspaceId, changeHomePage) {
+                debugger;
                 if (workspaceId == undefined) {
                     var search = $location.search();
                     if (search && search.workspaceId)
@@ -27,6 +28,7 @@ angular.module('backAnd.controllers')
 
                 menuService.queryjsonp({ workspaceId: workspaceId },
                     function success(data) {
+                        debugger;
                         $scope.currentWorkspace = data.workspace;
                         //$scope.pages = data.workspace.pages;
                         //$scope.currentWorkspace = data.workspace;
