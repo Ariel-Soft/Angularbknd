@@ -68,6 +68,7 @@ var backand = {
             token: null,
             onlogin: null,
             addLoginEvent: function (appname) {
+
                 if (backand.security.authentication.onlogin != null) return;
                 // Create the event
                 if (window.navigator.userAgent.indexOf("MSIE ") > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
@@ -864,9 +865,9 @@ angular.module('backAnd.controllers')
         * @methodOf backand.js.controllers:profileController
         * @description initiate the configuration of the user profile
         */
-        function($scope, Global, menuService, $http) {
+        function ($scope, Global, menuService, $http) {
             $scope.global = Global;
-            $scope.init = function() {
+            $scope.init = function () {
                 menuService.queryjsonp({
                 }, function(data) {
                     $scope.profile = data.company;
@@ -2673,6 +2674,7 @@ angular.module('backAnd.directives')
 angular.module('backAnd.directives')
     .directive('bkndForm', ['$sce','$q','$location','$route','configService','dataItemService','dataListService','$log','Global',
         function ($sce, $q, $location, $route, configService, dataItemService, dataListService, $log, Global) {
+         
 
     /**
     * @ngdoc directive
@@ -2709,6 +2711,7 @@ angular.module('backAnd.directives')
             * @description configuration information of the form and its fields
             */
             scope.configInfo = {
+               
                 fields: [],
                 categoriesDictionary: {},
                 title: '',
@@ -2723,7 +2726,6 @@ angular.module('backAnd.directives')
              * @param {object} params, required, either the search parameters or directive attributes containing the scope parameters
              */
             scope.init = function (params) {
-
                 /**
                 * @name isNew
                 * @propertyOf directive.bkndForm {boolean} 
@@ -2743,6 +2745,7 @@ angular.module('backAnd.directives')
                 var selectOptions = $q.defer();
 
                 configService.read({
+                   
                     dataType: "view",
                     id: params.viewName
                 }, function (data) {
@@ -3009,7 +3012,7 @@ angular.module('backAnd.directives')
                 scope.configInfo.title = viewConfig.captionText;
                 scope.configInfo.columnsInDialog = viewConfig.dataEditing.columnsInDialog;
                 scope.configInfo.editable = (scope.isNew && viewConfig.dataEditing.allowAdd) || (!scope.isNew && viewConfig.dataEditing.allowEdit);
-
+                scope.configInfo.editable = true;
                 angular.forEach(viewConfig.fields, function (field) {
                     var type;
                     var currencySymbol;

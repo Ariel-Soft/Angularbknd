@@ -2442,10 +2442,16 @@ var exampleInit = (function () {
     });
 });
 
+
+    /**
+    * @name configInfo
+    * @propertyOf directive.bkndForm {object} 
+    * @description configuration information of the form and its fields
+    */
+
 $(document).ready(function () {
     $('.dropdown-toggle .active-parent .active').css('border', 'none');
     $('.dropdown-menu').css('border-color', '#17232c');
-   
 });
 function alignBanner() {
     if ($('#backand-banner').length == 1) {
@@ -2460,3 +2466,4 @@ $(function () {
         alignBanner();
     });
 });
+

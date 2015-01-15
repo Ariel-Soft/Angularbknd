@@ -97,13 +97,11 @@ angular.module('backAnd.controllers')
             //}
 
             $scope.authentication = function () {
-                debugger;
                 $scope.loginError = '';
                 $scope.waiting = true;
                
                 AuthService.signIn($scope.user, $scope.password, $scope.appName,
                 function (data, status, headers, config) {
-                    debugger;
                    
                     localStorage.setItem('Authorization', $http.defaults.headers.common['Authorization']);
                     $http.defaults.headers.common['Authorization'] = localStorage.getItem('Authorization');
@@ -114,7 +112,6 @@ angular.module('backAnd.controllers')
                     $rootScope.$broadcast('signedIn', data);
                 },
                 function (data, status, headers, config) {
-                    debugger;
                     var error_description = "The server is busy. Please contact your administrator or try again later.";
                     if (data && data.error_description)
                         error_description = data.error_description;

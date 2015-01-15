@@ -12,10 +12,8 @@ angular.module('backAnd.controllers')
         * @description initiate the configuration of the user profile
         */
         function ($scope, Global, $compile, menuService, $timeout, $rootScope, $http, $location) {
-            debugger;
             $scope.global = Global;
             $scope.init = function (workspaceId, changeHomePage) {
-                debugger;
                 if (workspaceId == undefined) {
                     var search = $location.search();
                     if (search && search.workspaceId)
@@ -23,7 +21,6 @@ angular.module('backAnd.controllers')
                 }
                 menuService.queryjsonp({ workspaceId: workspaceId }
                 , function (data) {
-                    debugger;
                     $scope.profile = data.company;
                     $scope.profile.img = decodeURIComponent($scope.profile.logo);
                     $scope.profile.fullName = data.user.fullName;
